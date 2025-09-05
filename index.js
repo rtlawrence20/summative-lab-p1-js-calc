@@ -1,72 +1,75 @@
-// Create an object that holds calculator and methods that will be used
+import { Calculator } from "./calc.js";
+import { createInterface } from "readline";
 
-/**
- * This is a calculator capable of basic mathematical operations with two operands
- * @property {Array} calcHistory - history of previous calculations
- * @method add(a,b) - adds a to b
- * @method sub(a,b) - subtracts b from a
- * @method mul(a,b) - multiplies a and b
- * @method div(a,b) - divides a by b for b != 0
- */
-export const Calculator = {
-    calcHistory: [],
+// Create readline interface
+const rl = createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
 
-    _validNumbers(a,b){
-        //check value of 'a' isNumber. If not, log to user that input is invalid
-        let conditionNaN = (tempVar) => 
-            typeof tempVar !== 'number' || !Number.isFinite(tempVar);
+// Helper to prompt user input
+function prompt(question) {
+    return new Promise((resolve) => {
+        rl.question(question, (input) => resolve(input));
+    });
+}
 
-        if (conditionNaN(a)) {
-            console.log(`Value of operand a:[${a}] is not valid input`);
-            return false;
-        }
-        //check value of 'b' isNumber. If not, log to user that input is invalid
-        else if (conditionNaN(b)) {
-            console.log(`Value of operand b:[${b}] is not valid input`);
-            return false;
-        }
-        else{
-            return true;
-        }
-    },
+async function runCalculator() {
+    let running = true;
+    //print calculator menu to screen
+    console.log("\n📟     Calculator Menu:     📟\n"+
+        "1. Add         |    4. Divide\n" +
+        "2. Subtract    |    5. History\n" +
+        "3. Multiply    |    6. Exit\n"
+    );
+    // Start calculator loop
+    while (running) {
+        const choice = await prompt("Input a number 1-6 corresponding to the list above:\n");
+        // Calculation option will require further user input of two operands
+        const furtherInputReq = ['1', '2', '3', '4'];
+        if (furtherInputReq.includes(choice)) {
+            const a = parseFloat(await prompt("Input first number: "));
+            const b = parseFloat(await prompt("Input second number: "));
 
-    add(a,b) {
-        if (this._validNumbers(a,b)) {
-            const result = a + b;
-            this.calcHistory.push(result);
-            return result;
-        }
-        return;
-    },
-
-    sub(a,b) {
-        if (this._validNumbers(a,b)) {
-            const result = a - b;
-            this.calcHistory.push(result);
-            return result;
-        }
-        return;
-    },
-
-    mul(a,b) {
-        if (this._validNumbers(a,b)) {
-            const result = a * b;
-            this.calcHistory.push(result);
-            return result;
-        }
-        return;
-    },
-
-    div(a,b) {
-        if (this._validNumbers(a,b)) {
-            if (b === 0) {
-                console.log(`The value of operand b ${[b]} cannot be 0`)
-                return null;
+            //Check for valid input
+            if (isNaN(a) || isNaN(b)) {
+                console.log("❌ Invalid input. Please ensure valid numbers are used.");
+                continue;
             }
-            const result = a / b;
-            this.calcHistory.push(result);
-            return result;
+
+            //Now that we have all required, valid input, determine what the calculator should do
+            let result;
+            switch (choice) {
+                case '1':
+                    result = Calculator.add(a, b);
+                    console.log(`✅ Result: ${a} + ${b} = ${result}\n`);
+                    break;
+                case '2':
+                    result = Calculator.sub(a, b);
+                    console.log(`✅ Result: ${a} - ${b} = ${result}\n`);
+                    break;
+                case '3':
+                    result = Calculator.mul(a, b);
+                    console.log(`✅ Result: ${a} * ${b} = ${result}\n`);
+                    break;
+                case '4':
+                    result = Calculator.div(a, b);
+                    console.log(`✅ Result: ${a} / ${b} = ${result}\n`);
+                    break;
+            }
+        } 
+        else if (choice === '5') {
+            console.log(`History of calculations: ${Calculator.calcHistory}`);
+        } 
+        else if (choice === '6') {
+            running = false;
+            console.log("Thank you 👋");
+        } 
+        else {
+            console.log("❌ Invalid option. Please try again.");
         }
-        return;
     }
-};
+    rl.close();
+}
+
+runCalculator();

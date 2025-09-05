@@ -1,4 +1,4 @@
-import { Calculator } from "./index.js";
+import { Calculator } from "./calc.js";
 
 Calculator.add(2, 5);
 Calculator.add(-1,3);
