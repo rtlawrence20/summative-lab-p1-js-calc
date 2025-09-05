@@ -11,6 +11,7 @@
 export const Calculator = {
     calcHistory: [],
 
+    // private helper operand validation
     _validNumbers(a,b){
         //check value of 'a' isNumber. If not, log to user that input is invalid
         let conditionNaN = (tempVar) => 
@@ -59,6 +60,7 @@ export const Calculator = {
 
     div(a,b) {
         if (this._validNumbers(a,b)) {
+            //special case for div b can't be 0
             if (b === 0) {
                 console.log(`The value of operand b ${[b]} cannot be 0`)
                 return null;

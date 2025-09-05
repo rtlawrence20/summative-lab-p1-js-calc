@@ -26,6 +26,7 @@ async function runCalculator() {
     // Start calculator loop
     while (running) {
         const choice = await prompt("Input a number 1-6 corresponding to the list above:\n");
+
         // Calculation option will require further user input of two operands
         const furtherInputReq = ['1', '2', '3', '4'];
         if (furtherInputReq.includes(choice)) {
@@ -59,6 +60,7 @@ async function runCalculator() {
                     break;
             }
         } 
+        //print calc history
         else if (choice === '5') {
             console.log(   "\n_____________________________________");
             console.log("\n📟     Calculator history:       📟 \n");
@@ -66,12 +68,13 @@ async function runCalculator() {
                 console.log(`|      ${index+1}:      value: ${element}   `);
             });
             console.log("—————————————————————————————————————\n");
-            //console.log(`History of calculations: ${Calculator.calcHistory}`);
-        } 
+        }
+        //begin exiting program 
         else if (choice === '6') {
             running = false;
             console.log("Thank you, bye.");
-        } 
+        }
+        //any input outside 1-6 
         else {
             console.log("Invalid option. Please try again.");
         }

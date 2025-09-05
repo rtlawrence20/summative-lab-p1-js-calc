@@ -1,5 +1,6 @@
 import { Calculator } from "./calc.js";
 
+//Quick test suite to check various values. This could be much more robust, but this quickly tests basic functionality.
 Calculator.add(2, 5);
 Calculator.add(-1,3);
 Calculator.add(2,-4);
