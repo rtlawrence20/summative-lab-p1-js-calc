@@ -17,11 +17,12 @@ function prompt(question) {
 async function runCalculator() {
     let running = true;
     //print calculator menu to screen
-    console.log("\n📟     Calculator Menu:     📟\n"+
-        "1. Add         |    4. Divide\n" +
-        "2. Subtract    |    5. History\n" +
-        "3. Multiply    |    6. Exit\n"
-    );
+    console.log(   "\n_____________________________________");
+    console.log("| 📟       Calculator Menu:       📟 |\n"+
+                "| 1. Add        |      4. Divide     |\n" +
+                "| 2. Subtract   |      5. History    |\n" +
+                "| 3. Multiply   |      6. Exit       |");
+    console.log("—————————————————————————————————————\n");
     // Start calculator loop
     while (running) {
         const choice = await prompt("Input a number 1-6 corresponding to the list above:\n");
@@ -33,40 +34,46 @@ async function runCalculator() {
 
             //Check for valid input
             if (isNaN(a) || isNaN(b)) {
-                console.log("❌ Invalid input. Please ensure valid numbers are used.");
+                console.log("Invalid input. Please ensure valid numbers.");
                 continue;
             }
 
-            //Now that we have all required, valid input, determine what the calculator should do
+            //Now with all required and valid input, determine what the calculator should do
             let result;
             switch (choice) {
                 case '1':
                     result = Calculator.add(a, b);
-                    console.log(`✅ Result: ${a} + ${b} = ${result}\n`);
+                    console.log(`Result: ${a} + ${b} = ${result}\n`);
                     break;
                 case '2':
                     result = Calculator.sub(a, b);
-                    console.log(`✅ Result: ${a} - ${b} = ${result}\n`);
+                    console.log(`Result: ${a} - ${b} = ${result}\n`);
                     break;
                 case '3':
                     result = Calculator.mul(a, b);
-                    console.log(`✅ Result: ${a} * ${b} = ${result}\n`);
+                    console.log(`Result: ${a} * ${b} = ${result}\n`);
                     break;
                 case '4':
                     result = Calculator.div(a, b);
-                    console.log(`✅ Result: ${a} / ${b} = ${result}\n`);
+                    console.log(`Result: ${a} / ${b} = ${result}\n`);
                     break;
             }
         } 
         else if (choice === '5') {
-            console.log(`History of calculations: ${Calculator.calcHistory}`);
+            console.log(   "\n_____________________________________");
+            console.log("\n📟     Calculator history:       📟 \n");
+            Calculator.calcHistory.forEach((element, index) => {
+                console.log(`|      ${index+1}:      value: ${element}   `);
+            });
+            console.log("—————————————————————————————————————\n");
+            //console.log(`History of calculations: ${Calculator.calcHistory}`);
         } 
         else if (choice === '6') {
             running = false;
-            console.log("Thank you 👋");
+            console.log("Thank you, bye.");
         } 
         else {
-            console.log("❌ Invalid option. Please try again.");
+            console.log("Invalid option. Please try again.");
         }
     }
     rl.close();
