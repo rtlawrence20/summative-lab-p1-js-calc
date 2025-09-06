@@ -44,30 +44,25 @@ async function runCalculator() {
             switch (choice) {
                 case '1':
                     result = Calculator.add(a, b);
-                    console.log(`Result: ${a} + ${b} = ${result}\n`);
+                    console.log(`Result: ${result}\n`);
                     break;
                 case '2':
                     result = Calculator.sub(a, b);
-                    console.log(`Result: ${a} - ${b} = ${result}\n`);
+                    console.log(`Result: ${result}\n`);
                     break;
                 case '3':
                     result = Calculator.mul(a, b);
-                    console.log(`Result: ${a} * ${b} = ${result}\n`);
+                    console.log(`Result: ${result}\n`);
                     break;
                 case '4':
                     result = Calculator.div(a, b);
-                    console.log(`Result: ${a} / ${b} = ${result}\n`);
+                    console.log(`Result: ${result}\n`);
                     break;
             }
         } 
         //print calc history
         else if (choice === '5') {
-            console.log(   "\n_____________________________________");
-            console.log("\n📟     Calculator history:       📟 \n");
-            Calculator.calcHistory.forEach((element, index) => {
-                console.log(`|      ${index+1}:      value: ${element}   `);
-            });
-            console.log("—————————————————————————————————————\n");
+            Calculator.showHistory()
         }
         //begin exiting program 
         else if (choice === '6') {

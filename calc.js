@@ -31,10 +31,28 @@ export const Calculator = {
         }
     },
 
+    recHistory(a, b, operator, result) {
+        this.calcHistory.push(`${a} ${operator} ${b} = ${result}`);
+    },
+
+    showHistory() {
+        console.log(   "\n_____________________________________");
+        console.log("\n📟     Calculator history:       📟 \n");
+        if (this.calcHistory.length === 0) {
+            console.log("      No calculations stored yet.    ");
+        } 
+        else {
+            Calculator.calcHistory.forEach((element, index) => {         
+                console.log(`|       ${element}`);
+            });
+        }
+        console.log("—————————————————————————————————————\n");
+    },
+
     add(a,b) {
         if (this._validNumbers(a,b)) {
             const result = a + b;
-            this.calcHistory.push(result);
+            this.recHistory(a, b, '+', result);
             return result;
         }
         return;
@@ -43,7 +61,7 @@ export const Calculator = {
     sub(a,b) {
         if (this._validNumbers(a,b)) {
             const result = a - b;
-            this.calcHistory.push(result);
+            this.recHistory(a, b, '-', result);
             return result;
         }
         return;
@@ -52,7 +70,7 @@ export const Calculator = {
     mul(a,b) {
         if (this._validNumbers(a,b)) {
             const result = a * b;
-            this.calcHistory.push(result);
+            this.recHistory(a, b, '*', result);
             return result;
         }
         return;
@@ -66,7 +84,7 @@ export const Calculator = {
                 return null;
             }
             const result = a / b;
-            this.calcHistory.push(result);
+            this.recHistory(a, b, '/', result);
             return result;
         }
         return;
